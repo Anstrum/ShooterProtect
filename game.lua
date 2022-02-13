@@ -22,8 +22,7 @@ local ship = {}
 	ship.scale = nil
 	ship.shoots = {}
 function game.load()
-	--[[
-	--init background]]
+	--init background
 	for i = 1, game.numberOfStarAsset do
 		table.insert(game.starAssets, love.graphics.newImage("Ressources/star"..i..".png"))
 	end
@@ -74,6 +73,7 @@ function game.update(dt)
 
 
 
+
 	--[[
 			--Ship Update]]
 	--Ship Movement
@@ -110,12 +110,10 @@ function game.update(dt)
 		game.generateEnemy()
 	end
 	for i = #game.enemies, 1, -1 do
-		game.enemies[i].x = game.enemies[i].x + (0 -game.enemies[i].speed) * (math.cos(game.enemies[i].angle)) * dt
-		game.enemies[i].y = game.enemies[i].y + (0 -game.enemies[i].speed) * (math.sin(game.enemies[i].angle)) * dt
+		game.enemies[i].x = game.enemies[i].x + (game.enemies[i].speed) * (math.cos(game.enemies[i].angle)) * dt
+		game.enemies[i].y = game.enemies[i].y + (game.enemies[i].speed) * (math.sin(game.enemies[i].angle)) * dt
 	end
 	--[[]]
-
-
 end
 
 function game.mousepressed(click)
@@ -123,7 +121,6 @@ function game.mousepressed(click)
 		ship.generateShoot()
 	end
 end
-
 
 function game.keypressed(key) 
 	if key == "space" then
@@ -164,6 +161,7 @@ end
 
 
 
+
 --[[
 		--Others Functions]]
 function ship.generateShoot()
@@ -176,17 +174,24 @@ function ship.generateShoot()
 end
 function game.generateEnemy()
 	local myEnemy = {}
-	myEnemy.x = math.random
-	myEnemy.angle =  math.random() + math.random(0, 6) - 3
+	myEnemy.x = math.random(0, 800)
+	myEnemy.y = math.random(0, 600)
+	if myEnemy.x > 400 then 
+		myEnemy.x = myEnemy.x + 450 
+	else 
+		myEnemy.x = myEnemy.x - 450 
+	end
+	if myEnemy.y > 300 then 
+		myEnemy.y = myEnemy.y + 350 
+	else 
+		myEnemy.y = myEnemy.y - 350 
+	end
+	myEnemy.angle = math.atan2(300 - myEnemy.y, 400 - myEnemy.x)
 	myEnemy.speed = math.random(100, 250)
-	local randDist = math.random(550, 700)
-	myEnemy.x = 400 + math.cos(myEnemy.angle) * randDist
-	myEnemy.y = 300 + math.sin(myEnemy.angle) * randDist
 	myEnemy.radius = 20
 	table.insert(game.enemies, myEnemy)
 end
 --[[]]
-
 
 
 

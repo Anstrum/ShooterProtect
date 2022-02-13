@@ -8,7 +8,6 @@ function love.load()
 	game.load()
 end
 
-
 function love.update(dt)
 	game.update(dt)
 end
@@ -16,6 +15,7 @@ end
 function love.keypressed(key)
 	game.keypressed(key)
 end
+
 function love.mousepressed(x, y, click)
 	game.mousepressed(click)
 end
