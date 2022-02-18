@@ -8,7 +8,10 @@ local ship = {}
 	ship.y = screen.height / 2
 	ship.width = nil
 	ship.height = nil
+	ship.angle = nil
+	ship.rotaSpeed = 0
 	ship.actualAxe = 7
+	ship.turnLeft = false
 	ship.axes = {}
 
 
@@ -24,6 +27,7 @@ local ship = {}
 		ship.addAxis( 0 - math.pi * ( 3 / 4 ))
 		ship.addAxis( 0 - math.pi / 2)
 		ship.addAxis( 0 - math.pi / 4)
+		ship.shoots.load()
 	end
 
 
@@ -32,20 +36,34 @@ local ship = {}
 			ship.actualAxe = ship.actualAxe - 1
 			if ship.actualAxe < 1 then
 				ship.actualAxe = ship.actualAxe + #ship.axes
+				return
 			end
 		end
 		if key == "d" or key == "right" then
 			ship.actualAxe = ship.actualAxe + 1
 			if ship.actualAxe > #ship.axes then
 				ship.actualAxe = ship.actualAxe - #ship.axes
+				return
 			end
 		end
 		if key == "z" or key == "s" or key == "up" or key == "down" then
 			ship.actualAxe = ship.actualAxe + #ship.axes / 2 
 			if ship.actualAxe > #ship.axes then
 				ship.actualAxe = ship.actualAxe - #ship.axes
+				return
 			end
 		end
+		ship.shoots.keyPressed(key, ship.axes[ship.actualAxe].angle)
+	end
+
+	function ship.update(dt)
+		ship.shoots.update(dt)
+		ship.shoots.isDown(ship.axes[ship.actualAxe].angle)
+	end
+                
+
+	function ship.mousePressed(click)
+		ship.shoots.mousePressed(click, ship.axes[ship.actualAxe].angle)
 	end
 
 
@@ -54,6 +72,7 @@ local ship = {}
 			--love.graphics.line(ship.x, ship.y, ship.x + math.cos(ship.axes[i].angle) * 550, ship.y + math.sin(ship.axes[i].angle) * 550)
 		end
 		love.graphics.draw(ship.sprite, ship.x, ship.y, ship.axes[ship.actualAxe].angle, 4, 4, ship.width / 2, ship.height / 2)
+		ship.shoots.draw()
 	end
 
 
