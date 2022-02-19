@@ -81,7 +81,7 @@ local ship = {}
 		myAxis.angle = angle
 		myAxis.id = #ship.axes + 1
 		table.insert(ship.axes, myAxis)
-	end
+	end	
 
 
 return ship
