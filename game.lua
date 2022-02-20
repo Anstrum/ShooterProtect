@@ -15,7 +15,7 @@ end
 function game.update(dt)
 	game.background.update(dt)
 	game.ship.update(dt)
-	game.enemies.update(dt)
+	game.enemies.update(dt, game.ship.axes)
 end
 
 function game.mousepressed(click)
