@@ -2,7 +2,7 @@ local enemies = {}
 	enemies.list = {}
 	enemies.tick = 0
 	enemies.coolDown = 1
-	enemies.spawnRate = 0.5
+	enemies.spawnRate = 0.1
 	enemies.radius = 15
 	enemies.color = {0, 1, 0, 1}
 	enemies.speed = 175
@@ -12,8 +12,7 @@ local enemies = {}
 
 
 	function enemies.update(dt, axes)
-		print(#enemies.list)
-		enemies.spawnRate = enemies.spawnRate + 0.2 * dt
+		enemies.spawnRate = enemies.spawnRate + 0.1 * dt
 		enemies.tick = enemies.tick + enemies.spawnRate * dt
 
 		if enemies.tick	> enemies.coolDown then
@@ -41,6 +40,7 @@ local enemies = {}
 	function enemies.generate(axes)
 		local myEnemy = {}
 			myEnemy.angle = axes[math.random(1, #axes)].angle
+			myEnemy.radius = enemies.radius
 			myEnemy.speed = math.random(enemies.speed - 100, enemies.speed)
 			myEnemy.x = math.cos(myEnemy.angle) * -550 + 400
 			myEnemy.y = math.sin(myEnemy.angle) * -550 + 300

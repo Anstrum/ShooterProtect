@@ -4,7 +4,7 @@ local shoots = {}
 	shoots.baseSpeed = 250
 	shoots.isReady = false
 	shoots.tick = 0
-	shoots.coolDown = 0.5
+	shoots.coolDown = 0.2
 	shoots.sprite = nil
 	shoots.rechargeBar = {}
 		shoots.rechargeBar.width = nil
@@ -23,6 +23,7 @@ local shoots = {}
 
 
 	function shoots.update(dt)
+		print("shoot count:"..#shoots.list)
 		if not shoots.isReady then
 			shoots.tick = shoots.tick + 1 * dt
 		end
@@ -41,26 +42,6 @@ local shoots = {}
 		end
 	end
 
-
-	function shoots.keyPressed(key, angle)
-		if key == "space" then
-			if shoots.isReady then
-				shoots.createShoot(angle)
-				isReady = false
-			end
-		end
-	end
-
-
-	function shoots.mousePressed(click, angle)
-		if click == 1 then
-			if shoots.isReady then
-				shoots.createShoot(angle)
-				shoots.isReady = false
-			end
-		end
-	end
-
 	
 	function shoots.isDown(angle)
 		if love.mouse.isDown(1) or love.keyboard.isDown("space") then
@@ -74,7 +55,6 @@ local shoots = {}
 
 	function shoots.draw()
 		for i = 1, #shoots.list do
-			print(i)
 			love.graphics.draw(shoots.list[i].sprite, shoots.list[i].x, shoots.list[i].y, shoots.list[i].angle, 4, 4, shoots.sprite:getWidth() / 2, shoots.sprite:getHeight() / 2)
 		end
 
