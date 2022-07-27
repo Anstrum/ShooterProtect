@@ -19,14 +19,18 @@ local background = {}
 
 
 	function background.update(dt)
-		while #background.stars < background.targetStarCount do
-			background.addStar(false)
-		end
 		for i = #background.stars, 1, -1 do
 			local myStar = background.stars[i]
 			myStar.y = myStar.y - myStar.speed * dt
 			if myStar.y < -50 then
 				table.remove(background.stars, i)
+			end
+		end
+
+		if #background.stars < background.targetStarCount then
+			local numberToCreate = background.targetStarCount - #background.stars
+			for i = 1, numberToCreate do
+				background.addStar(false)
 			end
 		end
 	end
@@ -36,6 +40,7 @@ local background = {}
 		for i = 1, #background.stars do
 			love.graphics.draw(background.sprites[background.stars[i].sprite], background.stars[i].x, background.stars[i].y)
 		end
+		love.graphics.print("Star amount: "..#background.stars, 10, 10)
 	end
 
 
@@ -44,7 +49,7 @@ local background = {}
 		myStar.x = math.random(0, screen.width)
 		myStar.y = screen.height
 		if isLoad then
-			myStar.y = math.random(0, screen.height)
+			myStar.y = math.random(0, screen.height + 100)
 		end
 		myStar.sprite = math.random(1, #background.sprites)
 		myStar.speed = math.random(background.minStarSpeed, background.maxStarSpeed)
